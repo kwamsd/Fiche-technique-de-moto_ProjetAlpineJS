@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nos Motos | Maison du 2 Roues</title>
+
+  <link rel="stylesheet" href="../css/motos.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto+Mono:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link rel="shortcut icon" href="../icon/fondecran.ico" type="image/x-icon">
+</head>
+
+<body x-data="bikes" x-init="init()">
+  <header class="site-header">
+    <h1><a href="../index.html">Maison du&nbsp;2&nbsp;Roues</a></h1>
+  </header>
+
+  <!-- navigation marques -->
+  <nav class="brands">
+    <ul>
+      <li class="nav-item">
+        <img src="../image/nav/ktm.png" alt="Marque KTM">
+        <video src="../video/nav/ktm.mov" muted loop playsinline></video>
+      </li>
+      <li class="nav-item">
+        <img src="../image/nav/yamaha.png" alt="Marque Yamaha">
+        <video src="../video/nav/Yamaha.mp4" muted loop playsinline></video>
+      </li>
+      <li class="nav-item">
+        <img src="../image/nav/Capture d’écran 2024-10-16 à 03.19.35.png" alt="Marque Honda">
+        <video src="../video/nav/honda.mov" muted loop playsinline></video>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- grille de motos -->
+  <main class="carousel">
+    <template x-for="(bike,i) in bikes" :key="i">
+      <article class="moto" @click="openModal(i)">
+        <div class="carte-moto">
+          <img :src="bike.img" :alt="`Image de ${bike.model}`">
+          <div class="titre-moto"><p x-text="bike.model"></p></div>
+        </div>
+      </article>
+    </template>
+  </main>
+
+  <!-- MODALE vidéo + fiche technique -->
+  <div x-show="modalOpen" x-transition.opacity x-cloak class="modal-overlay"
+       @keydown.escape.window="closeModal"
+       @click.self="closeModal">
+    <div class="modal-box">
+      <button class="close-btn" @click="closeModal">&times;</button>
+
+      <template x-if="selectedBike">
+        <video autoplay loop muted playsinline controls>
+          <source :src="selectedBike.video" type="video/mp4">
+        </video>
+      </template>
+
+      <section class="modal-specs" :class="`fiche-${selectedBike.brand}`" x-html="selectedBike?.specs"></section>
+    </div>
+  </div>
+
+  <!-- FOOTER (identique) ---------------------------------------------------- -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="../image/logo.webp" alt="Logo Maison du 2 Roues" class="footer-logo">
+        <p class="tagline">Ride fast. Ride free.</p>
+      </div>
+
+      <nav class="footer-nav">
+        <h6>Navigation</h6>
+        <ul>
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#">Nos Motos</a></li>
+          <li><a href="#">Équipements</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-marques">
+        <h6>Nos marques</h6>
+        <ul>
+          <li><a href="#">KTM</a></li>
+          <li><a href="#">Yamaha</a></li>
+          <li><a href="#">Honda</a></li>
+        </ul>
+      </div>
+
+      <address class="footer-contact">
+        <h6>Contact</h6>
+        <p>🏍 42 Route des Crêtes<br>75000 Paris</p>
+        <p>☎️ 01 23 45 67 89</p>
+        <p>✉️ <a href="mailto:contact@m2r.fr">contact@m2r.fr</a></p>
+      </address>
+
+      <ul class="social-icons">
+        <li><a class="facebook"  href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a></li>
+        <li><a class="instagram" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+        <li><a class="twitter"   href="#" aria-label="Twitter"><i class="fa-brands fa-snapchat"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy;&nbsp;2025&nbsp;Maison du 2 Roues — conçu par et pour les motards.</p>
+    </div>
+  </footer>
+
+  <!-- scripts -->
+  <script src="../script/caroussel.js" defer></script>
+  <script src="../script/video.js"     defer></script>
+
+  <!-- logique AlpineJS ------------------------------------------------------ -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('bikes', () => ({
+        /* -------- données -------- */
+        bikes: [
+          {brand:'ktm',   model:'500 EXC-F',     img:'../image/KTM/500exc-f.png',        video:'../video/excf500.mov',       make:'ktm',   year:2022},
+          {brand:'ktm',   model:'Super Adventure', img:'../image/KTM/super-adventure.png', video:'../video/super-adventure.mov', make:'ktm',   year:2022},
+          {brand:'ktm',   model:'Super Duke GT',  img:'../image/KTM/super-dukeGT1290.png', video:'../video/super-dukegt.mov',  make:'ktm',   year:2022},
+
+          {brand:'yamaha',model:'YZF-R1',         img:'../image/YAMAHA/miniR1.png',       video:'../video/R1.mov',            make:'yamaha',year:2022},
+          {brand:'yamaha',model:'Ténéré',         img:'../image/YAMAHA/miniTENERE.png',   video:'../video/tenere.mov',         make:'yamaha',year:2022},
+          {brand:'yamaha',model:'TMAX',           img:'../image/YAMAHA/miniTMAX.png',     video:'../video/tmax.mov',           make:'yamaha',year:2022},
+
+          {brand:'honda', model:'Transalp',       img:'../image/HONDA/minitransalp.png',  video:'../video/transalp.mov',       make:'honda', year:2022},
+          {brand:'honda', model:'Goldwing',       img:'../image/HONDA/miniGoldwing.png',  video:'../video/goldwing.mov',       make:'honda', year:2022},
+          {brand:'honda', model:'X-ADV',          img:'../image/HONDA/miniXADV.png',      video:'../video/xadv.mov',           make:'honda', year:2022}
+        ],
+
+        /* -------- états -------- */
+        modalOpen:false,
+        selectedBike:null,
+
+        /* -------- méthodes -------- */
+        openModal(i){
+          console.log('openModal déclenché', i);
+          this.selectedBike = this.bikes[i];
+          if(!this.selectedBike.specs){ this.loadSpecs(this.selectedBike); }
+          this.modalOpen = true;
+        },
+        closeModal(){
+          this.modalOpen = false;
+          this.selectedBike = null;
+        },
+
+        /* verrouillage scroll page quand la modale est ouverte */
+        init(){
+          this.$watch('modalOpen',v=>document.body.style.overflow = v ? 'hidden' : '');
+        },
+
+        /* API moteur Ninja ---------------------------------- */
+        async loadSpecs(bike){
+          const url=`https://api.api-ninjas.com/v1/motorcycles?make=${bike.make}&model=${bike.model.replace(/\\s+/g,'').toLowerCase()}&year=${bike.year}`;
+          try{
+            const res = await fetch(url,{headers:{'X-Api-Key':'AcZJOoXR8cUX4F99q1TzcA==JFuIaKO655SMIgLr'}});
+            const data = await res.json();
+            const b = data.find(x=>x.year==bike.year) || data[0] || {};
+            bike.specs = b.engine ? `
+              <h3>Caractéristiques&nbsp;techniques ${b.make} ${b.model} (${b.year})</h3>
+              <table>
+                <tr><th>Moteur</th>        <td>${b.engine}</td></tr>
+                <tr><th>Type</th>          <td>${b.type||'-'}</td></tr>
+                <tr><th>Poids</th>         <td>${b.dry_weight||'-'}</td></tr>
+                <tr><th>Transmission</th>  <td>${b.transmission||'-'}</td></tr>
+                <tr><th>Carburant</th>     <td>${b.fuel_capacity||'-'}</td></tr>
+                <tr><th>Émissions</th>     <td>${b.emission||'-'}</td></tr>
+                <tr><th>Boîte</th>         <td>${b.gearbox||'-'}</td></tr>
+              </table>` :
+              '<p>Données indisponibles 🙁</p>';
+          }catch{ bike.specs='<p>Erreur de chargement.</p>'; }
+        }
+      }));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chargement | M2R</title>
+  <link rel="preload" as="video" href="../video/loading.mov" type="video/mp4">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;background:#000;overflow:hidden}
+    video{width:100%;height:100%;object-fit:cover}
+  </style>
+</head>
+
+<body>
+  <video id="intro" autoplay muted playsinline>
+    <source src="../video/loading.mov" type="video/mp4">
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
+
+  <script>
+    const REDIRECT_DELAY = 4000;               // durée maxi en ms
+    const go = () => window.location.replace('moto.html');
+    const video = document.getElementById('intro');
+
+    video.addEventListener('ended', go);       // dès que la vidéo finit
+    setTimeout(go, REDIRECT_DELAY);            // sécurité au-delà de 4 s
+  </script>
+</body>
+</html>

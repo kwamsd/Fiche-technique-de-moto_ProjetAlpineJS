@@ -1,0 +1,363 @@
+:root {
+  --orange: #ff6600;
+  --dark: #1a1a1d;
+  --bg-alpha: rgba(0,0,0,.35);
+}
+
+/*===============================================
+  Reset global
+===============================================*/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;      /* empêche la barre de défilement + bande blanche */
+}
+
+/*===============================================
+  Corps de page
+===============================================*/
+body {
+  background: url(../image/fondecran.jpg) center/cover no-repeat fixed;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-style: italic;
+  min-height: 100vh;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/*===============================================
+  Header
+===============================================*/
+.site-header {
+  padding: 1rem 1rem 0;
+  text-align: center;
+}
+.site-header h1 {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 1px;
+}
+.site-header h1:hover {
+  color: var(--orange);
+}
+
+/*===============================================
+  Liens (anchor)
+===============================================*/
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color .3s, transform .3s;
+}
+a:hover {
+  color: #ccc;
+  transform: scale(1.05);
+}
+
+/*===============================================
+  Navigation marques
+===============================================*/
+.brands ul {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  list-style: none;
+}
+.nav-item {
+  position: relative;
+  width: 160px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav-item img,
+.nav-item video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .3s;
+}
+.nav-item video {
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-item:hover img {
+  opacity: 0;
+}
+.nav-item:hover video {
+  opacity: 1;
+}
+
+/*===============================================
+  Grille de cartes (carousel → grid)
+===============================================*/
+.carousel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  padding: 20px;
+  margin: 30px auto;
+  place-items: center;
+  background: rgba(0,0,0,.27);
+  backdrop-filter: blur(5px);
+}
+.moto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carte-moto {
+  position: relative;
+  width: 200px;
+  height: 360px;
+  background: var(--dark);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+  cursor: pointer;
+}
+.carte-moto:hover {
+  box-shadow: 0 10px 25px rgba(255,255,255,.6);
+}
+.carte-moto img,
+.carte-moto video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titre-moto {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,.6);
+  text-align: center;
+  padding: .25rem 0;
+}
+.titre-moto p {
+  text-transform: capitalize;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.25rem;
+  pointer-events: none;
+}
+
+/*===============================================
+  Ancienne fiche technique (masquée)
+===============================================*/
+.fiche-technique {
+  display: none; /* masquée : désormais dans la modale */
+}
+
+/*===============================================
+  Modale vidéo + fiche technique
+===============================================*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0,0,0,.8);
+}
+.modal-box video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.modal-specs {
+  background: #fff;
+  color: #000;
+  padding: 1rem;
+  max-height: 320px;
+  overflow: auto;
+}
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 2rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: transform .3s;
+}
+.close-btn:hover {
+  transform: scale(1.1);
+}
+
+/*===============================================
+  Footer
+===============================================*/
+.site-footer {
+  margin-top: auto;
+  background: var(--dark) url('../image/tiretrack.png') repeat center/180px;
+  color: #fff;
+  padding: 4rem 1rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 0;
+}
+.footer-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2.5rem;
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.footer-logo {
+  width: 140px;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,.8));
+}
+.tagline {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.25rem;
+  color: var(--orange);
+}
+.footer-nav h6,
+.footer-marques h6,
+.footer-contact h6 {
+  color: var(--orange);
+  margin-bottom: .5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.footer-nav ul,
+.footer-marques ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.footer-nav a,
+.footer-marques a {
+  transition: color .3s;
+}
+.footer-nav a:hover,
+.footer-marques a:hover {
+  color: #ccc;
+}
+.footer-contact p {
+  font-size: .9rem;
+  line-height: 1.4;
+}
+.footer-contact a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted #777;
+}
+.footer-contact a:hover {
+  color: #ccc;
+}
+.social-icons {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  list-style: none;
+}
+.social-icons a {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .3s, transform .3s;
+}
+.social-icons a:hover {
+  background: var(--orange);
+  transform: translateY(-3px);
+}
+.footer-bottom {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: .85rem;
+  opacity: .75;
+}
+
+/*===============================================
+  Thèmes de couleur par marque (fiche specs)
+===============================================*/
+.fiche-ktm th {
+  color: rgba(207, 117, 0, 0.906);
+}
+
+.fiche-yamaha th {
+  color: rgba(26, 6, 203, 0.906);
+}
+
+.fiche-honda th {
+  color: rgba(235, 39, 39, 0.906);
+}
+
+/*===============================================
+  Utilitaires & Cloak
+===============================================*/
+[x-cloak] {
+  display: none !important;
+}
+
+/*===============================================
+  Réactivité
+===============================================*/
+@media(max-width: 1024px) {
+  .carousel {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width: 640px) {
+  .carousel {
+    grid-template-columns: 1fr;
+  }
+  .footer-brand {
+    text-align: center;
+    align-items: center;
+  }
+  .footer-logo {
+    width: 120px;
+  }
+}
